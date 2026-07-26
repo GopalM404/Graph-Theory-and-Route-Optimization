@@ -1,4 +1,9 @@
 #include "NetworkGraph.h"
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
 
 const int INF = 1e9;
 
@@ -30,7 +35,13 @@ int getRouteCost(NetworkGraph& g, int src, int dest, bool applyTraffic) {
 
 int main() {
     NetworkGraph graph(500);
-    int src = 10, dest = 450;
+    int src, dest;
+
+    cout << "Enter Source City: ";
+    cin >> src;
+    
+    cout << "Enter Destination City: ";
+    cin >> dest;
 
     int normal = getRouteCost(graph, src, dest, false);
     int traffic = getRouteCost(graph, src, dest, true);
