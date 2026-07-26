@@ -1,9 +1,9 @@
 #include "NetworkGraph.h"
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
-struct GraphEdge {
-    int u, v, weight;
-    bool operator<(GraphEdge const& other) { return weight < other.weight; }
-};
+using namespace std;
 
 class DSU {
     vector<int> parent, rank;
@@ -28,33 +28,45 @@ public:
 
 int main() {
     NetworkGraph graph(500);
-    vector<GraphEdge> edges, result;
+    
+    // Format: pair<weight, pair<u, v>> to trigger automatic sorting by weight
+    vector<pair<int, pair<int, int>>> edges; 
+    vector<pair<int, int>> result; 
     int originalCost = 0, mstCost = 0;
 
     for (int i = 0; i < graph.cities; i++) {
         for (auto& edge : graph.adj[i]) {
             if (i < edge.first) {
-                edges.push_back({i, edge.first, edge.second});
+                edges.push_back({edge.second, {i, edge.first}});
                 originalCost += edge.second;
             }
         }
     }
 
+    // Automatically sorts by the first element (the weight)
     sort(edges.begin(), edges.end());
+    
     DSU dsu(graph.cities);
 
-    for (GraphEdge e : edges) {
-        if (dsu.find(e.u) != dsu.find(e.v)) {
-            dsu.unite(e.u, e.v);
-            result.push_back(e);
-            mstCost += e.weight;
+    for (auto& e : edges) {
+        int weight = e.first;
+        int u = e.second.first;
+        int v = e.second.second;
+
+        if (dsu.find(u) != dsu.find(v)) {
+            dsu.unite(u, v);
+            result.push_back({u, v});
+            mstCost += weight;
         }
     }
 
     cout << "Original Cost = " << originalCost << "\nMST Cost = " << mstCost << "\n";
     cout << "Cost Saved = " << ((float)(originalCost - mstCost) / originalCost) * 100.0 << " %\n\n";
     cout << "Selected Roads:\n";
-    for (int i = 0; i < min(5, (int)result.size()); i++) cout << "(" << result[i].u << "," << result[i].v << ")\n";
+    
+    for (int i = 0; i < min(5, (int)result.size()); i++) 
+        cout << "(" << result[i].first << "," << result[i].second << ")\n";
+        
     cout << "...\n[All " << result.size() << " structural spans successfully written]\n";
     return 0;
 }
