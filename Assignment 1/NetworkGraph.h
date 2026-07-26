@@ -12,7 +12,7 @@ public:
     NetworkGraph(int n = 500) {
         cities = n;
         adj.resize(cities);
-        srand(42); 
+        srand(time(0)); 
         
         for (int i = 0; i < cities; i++) {
             for (int j = i + 1; j < cities; j++) {
