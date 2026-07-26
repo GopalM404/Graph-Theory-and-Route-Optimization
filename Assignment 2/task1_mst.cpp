@@ -64,9 +64,8 @@ int main() {
     cout << "Cost Saved = " << ((float)(originalCost - mstCost) / originalCost) * 100.0 << " %\n\n";
     cout << "Selected Roads:\n";
     
-    for (int i = 0; i < min(5, (int)result.size()); i++) 
+    for (int i = 0; i < result.size() ; i++) 
         cout << "(" << result[i].first << "," << result[i].second << ")\n";
         
-    cout << "...\n[All " << result.size() << " structural spans successfully written]\n";
     return 0;
 }
