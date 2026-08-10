@@ -61,16 +61,17 @@ Governments need to minimize infrastructure costs while maintaining full connect
 - 💰 **MST Optimization:** Calculates the cheapest possible network to connect all 500 cities.
 - 🎯 **Strategic City Identification:** Ranks cities by connectivity to recommend logistics and airport hubs.
 - ⚠️ **Disaster Recovery:** Reroutes traffic dynamically when specific cities or roads are destroyed.
-- 🚗 **Traffic-Aware Routing:** Scales edge weights based on simulated congestion to find the fastest (not just shortest) route.
+- 🚗 **Traffic-Aware Routing:** Uses a simple Markov-chain based traffic model to update congestion states and scale edge weights before recalculating the fastest route.
 - 💥 **Vulnerability Analysis:** Uses Tarjan's algorithm to identify critical cities whose removal can disconnect parts of the network.
 
 ## 🧠 Data Structures & Algorithms Used
 
-| Feature                    | DSA Concept                      | Why                                                                               |
-| :------------------------- | :------------------------------- | :-------------------------------------------------------------------------------- |
-| MST Construction           | Kruskal's Algorithm + Union-Find | Sorts edges by weight and safely connects nodes without creating cycles.          |
-| Strategic Hubs             | Degree Centrality + Sorting      | Counts adjacent edges per node to measure a city's structural influence.          |
-| Disaster / Traffic Routing | Modified Dijkstra's Algorithm    | Re-calculates optimal paths while explicitly ignoring removed nodes/scaled edges. |
+| Feature                    | DSA Concept                                | Why                                                                                         |
+| :------------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------ |
+| MST Construction           | Kruskal's Algorithm + Union-Find           | Sorts edges by weight and safely connects nodes without creating cycles.                    |
+| Strategic Hubs             | Degree Centrality + Sorting                | Counts adjacent edges per node to measure a city's structural influence.                    |
+| Disaster Routing           | Modified Dijkstra's Algorithm              | Re-calculates optimal paths while explicitly ignoring removed nodes or roads.               |
+| Traffic Routing            | Markov Chain + Modified Dijkstra           | Updates traffic states probabilistically and recalculates routes using traffic-adjusted edge weights. |
 | Vulnerability Analysis     | Tarjan's Algorithm (DFS + Low-Link Values) | Identifies critical cities by detecting nodes whose removal separates parts of the network. |
 
 ### ⏱️ Time Complexity
