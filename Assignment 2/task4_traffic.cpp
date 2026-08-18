@@ -8,7 +8,7 @@ using namespace std;
 
 const int INF = 1e9;
 
-double normalDijkstra(NetworkGraph& graph, int src, int dest) {
+double dijkstra(NetworkGraph& graph, int src, int dest, bool traffic) {
     vector<double> dist(graph.cities, INF);
     priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> pq;
 
@@ -22,9 +22,13 @@ double normalDijkstra(NetworkGraph& graph, int src, int dest) {
 
         if (d > dist[u]) continue;
 
+        if (u == dest) return dist[u];
+
         for (auto edge : graph.adj[u]) {
             int v = edge.first;
-            int weight = edge.second;
+            double weight = edge.second;
+
+            if (traffic) weight *= (1 + (rand() % 3) * 0.5);
 
             if (dist[u] + weight < dist[v]) {
                 dist[v] = dist[u] + weight;
@@ -33,37 +37,7 @@ double normalDijkstra(NetworkGraph& graph, int src, int dest) {
         }
     }
 
-    return dist[dest];
-}
-
-double trafficDijkstra(NetworkGraph& graph, int src, int dest) {
-    vector<double> dist(graph.cities, INF);
-    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> pq;
-
-    dist[src] = 0;
-    pq.push({0, src});
-
-    while (!pq.empty()) {
-        double d = pq.top().first;
-        int u = pq.top().second;
-        pq.pop();
-
-        if (d > dist[u]) continue;
-
-        for (auto edge : graph.adj[u]) {
-            int v = edge.first;
-            int distance = edge.second;
-
-            double weight = distance * (1 + (rand() % 3) * 0.5);
-
-            if (dist[u] + weight < dist[v]) {
-                dist[v] = dist[u] + weight;
-                pq.push({dist[v], v});
-            }
-        }
-    }
-
-    return dist[dest];
+    return INF;
 }
 
 int main() {
@@ -76,8 +50,8 @@ int main() {
     cout << "Enter destination city: ";
     cin >> dest;
 
-    double originalCost = normalDijkstra(graph, src, dest);
-    double trafficCost = trafficDijkstra(graph, src, dest);
+    double originalCost = dijkstra(graph, src, dest, false);
+    double trafficCost = dijkstra(graph, src, dest, true);
 
     if (originalCost == INF) {
         cout << "No route exists\n";
