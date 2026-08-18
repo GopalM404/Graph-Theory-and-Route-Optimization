@@ -12,9 +12,9 @@ Before any routing or optimization occurs, a foundational mathematical graph is 
 
 ## ✨ Core Graph Features
 
-- 🗺️ **Network Generation:** Instantiates a 500-node undirected, weighted graph with realistic sparseness.
-- 💾 **Memory Efficiency:** Utilizes an Adjacency List (`vector<vector>`) to efficiently store the sparse graph.
-- ⏱️ **Time Complexity:** $O(V^2)$ for initial generation.
+* 🗺️ **Network Generation:** Instantiates a 500-node undirected, weighted graph with realistic sparseness.
+* 💾 **Memory Efficiency:** Utilizes an Adjacency List (`vector<vector>`) to efficiently store the sparse graph.
+* ⏱️ **Time Complexity:** $O(V^2)$ for initial generation.
 
 ---
 
@@ -28,9 +28,9 @@ Before optimizing a transportation grid, the baseline connectivity must be under
 
 ## ✨ Features
 
-- 🔗 **Component Analysis:** Identifies the largest connected group of cities (Task A).
-- 🧩 **Cluster Mapping:** Calculates the total number of disconnected sub-grids and their respective sizes (Task B).
-- 📍 **Shortest Path Routing:** Computes the optimal distance from a source city to all other reachable cities (Task C).
+* 🔗 **Component Analysis:** Identifies the largest connected group of cities (Task A).
+* 🧩 **Cluster Mapping:** Calculates the total number of disconnected sub-grids and their respective sizes (Task B).
+* 📍 **Shortest Path Routing:** Computes the optimal distance from a source city to all other reachable cities (Task C).
 
 ## 🧠 Data Structures & Algorithms Used
 
@@ -58,21 +58,21 @@ Governments need to minimize infrastructure costs while maintaining full connect
 
 ## ✨ Features
 
-- 💰 **MST Optimization:** Calculates the cheapest possible network to connect all 500 cities.
-- 🎯 **Strategic City Identification:** Ranks cities by connectivity to recommend logistics and airport hubs.
-- ⚠️ **Disaster Recovery:** Reroutes traffic dynamically when specific cities or roads are destroyed.
-- 🚗 **Traffic-Aware Routing:** Uses a simple Markov-chain based traffic model to update congestion states and scale edge weights before recalculating the fastest route.
-- 💥 **Vulnerability Analysis:** Uses Tarjan's algorithm to identify critical cities whose removal can disconnect parts of the network.
+* 💰 **MST Optimization:** Calculates the cheapest possible network to connect all 500 cities.
+* 🎯 **Strategic City Identification:** Ranks cities by connectivity to recommend logistics and airport hubs.
+* ⚠️ **Disaster Recovery:** Reroutes traffic dynamically when specific cities or roads are destroyed.
+* 🚗 **Traffic-Aware Routing:** Applies a simple random traffic multiplier to road weights during Dijkstra's algorithm and recalculates the fastest route under congestion.
+* 💥 **Vulnerability Analysis:** Uses Tarjan's algorithm to identify critical cities whose removal can disconnect parts of the network.
 
 ## 🧠 Data Structures & Algorithms Used
 
-| Feature                    | DSA Concept                                | Why                                                                                         |
-| :------------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------ |
-| MST Construction           | Kruskal's Algorithm + Union-Find           | Sorts edges by weight and safely connects nodes without creating cycles.                    |
-| Strategic Hubs             | Degree Centrality + Sorting                | Counts adjacent edges per node to measure a city's structural influence.                    |
-| Disaster Routing           | Modified Dijkstra's Algorithm              | Re-calculates optimal paths while explicitly ignoring removed nodes or roads.               |
-| Traffic Routing            | Markov Chain + Modified Dijkstra           | Updates traffic states probabilistically and recalculates routes using traffic-adjusted edge weights. |
-| Vulnerability Analysis     | Tarjan's Algorithm (DFS + Low-Link Values) | Identifies critical cities by detecting nodes whose removal separates parts of the network. |
+| Feature                | DSA Concept                                | Why                                                                                         |
+| :--------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------ |
+| MST Construction       | Kruskal's Algorithm + Union-Find           | Sorts edges by weight and safely connects nodes without creating cycles.                    |
+| Strategic Hubs         | Degree Centrality + Sorting                | Counts adjacent edges per node to measure a city's structural influence.                    |
+| Disaster Routing       | Modified Dijkstra's Algorithm              | Re-calculates optimal paths while explicitly ignoring removed nodes or roads.               |
+| Traffic Routing        | Modified Dijkstra's Algorithm              | Applies randomized traffic-adjusted edge weights while calculating the shortest route.      |
+| Vulnerability Analysis | Tarjan's Algorithm (DFS + Low-Link Values) | Identifies critical cities by detecting nodes whose removal separates parts of the network. |
 
 ### ⏱️ Time Complexity
 
@@ -99,3 +99,4 @@ g++ -std=c++17 task_A_largest_component.cpp -o task_A
 cd Assignment_2_Advanced_Routing
 g++ -std=c++17 task1_mst.cpp -o task1_mst
 ./task1_mst
+```
