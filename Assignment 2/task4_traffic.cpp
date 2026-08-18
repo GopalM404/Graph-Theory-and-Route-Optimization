@@ -1,5 +1,4 @@
 #include "NetworkGraph.h"
-
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -42,12 +41,7 @@ double getTrafficCost(int distance, int state) {
 // Dijkstra for normal road distances
 double normalDijkstra(NetworkGraph& graph, int src, int dest) {
     vector<double> dist(graph.cities, INF);
-
-    priority_queue<
-        pair<double, int>,
-        vector<pair<double, int>>,
-        greater<pair<double, int>>
-    > pq;
+    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> pq;
 
     dist[src] = 0;
     pq.push({0, src});
@@ -76,12 +70,7 @@ double normalDijkstra(NetworkGraph& graph, int src, int dest) {
 // Dijkstra using traffic-adjusted road costs
 double trafficDijkstra(NetworkGraph& graph, int src, int dest, vector<vector<int>>& traffic) {
     vector<double> dist(graph.cities, INF);
-
-    priority_queue<
-        pair<double, int>,
-        vector<pair<double, int>>,
-        greater<pair<double, int>>
-    > pq;
+    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> pq;
 
     dist[src] = 0;
     pq.push({0, src});
@@ -96,7 +85,6 @@ double trafficDijkstra(NetworkGraph& graph, int src, int dest, vector<vector<int
         for (auto edge : graph.adj[u]) {
             int v = edge.first;
             int distance = edge.second;
-
             double weight = getTrafficCost(distance, traffic[u][v]);
 
             if (dist[u] + weight < dist[v]) {
@@ -111,11 +99,7 @@ double trafficDijkstra(NetworkGraph& graph, int src, int dest, vector<vector<int
 
 int main() {
     NetworkGraph graph(500);
-
-    vector<vector<int>> traffic(
-        graph.cities,
-        vector<int>(graph.cities, 0)
-    );
+    vector<vector<int>> traffic(graph.cities, vector<int>(graph.cities, 0));
 
     // Calculate next traffic state for every road
     for (int u = 0; u < graph.cities; u++) {
@@ -134,7 +118,6 @@ int main() {
 
     cout << "Enter source city: ";
     cin >> src;
-
     cout << "Enter destination city: ";
     cin >> dest;
 
@@ -150,7 +133,6 @@ int main() {
     cout << "Traffic Cost: " << trafficCost << "\n";
 
     double delay = ((trafficCost - originalCost) / originalCost) * 100;
-
     cout << "Delay: " << delay << "%\n";
 
     return 0;
