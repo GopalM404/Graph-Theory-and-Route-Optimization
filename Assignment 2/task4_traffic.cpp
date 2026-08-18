@@ -135,10 +135,7 @@ int main() {
 
     NetworkGraph graph(500);
 
-    vector<vector<int>> traffic(
-        graph.cities,
-        vector<int>(graph.cities, 0)
-    );
+    vector<vector<int>> traffic(graph.cities,vector<int>(graph.cities, 0));
 
     // Calculate next traffic state for every road
     for (int u = 0; u < graph.cities; u++) {
